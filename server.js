@@ -1,6 +1,8 @@
 const http = require('http');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const libs = require('./libs');
+const { errorHandler } = require('./responseHandler')
 
 // 全域變數套件設定
 dotenv.config({ path: "./config.env" })
@@ -19,8 +21,15 @@ mongoose.connect(
   });
 
 const requestListenet = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World\n');
+  const { headers, message } = libs;
+
+  if (method === 'OPTIONS') {
+    res.writeHead(200, headers)
+    res.end();
+  } else {
+    errorHandler(res, 404, message[404]);
+  }
+
 }
 
 const server = http.createServer(requestListenet);
