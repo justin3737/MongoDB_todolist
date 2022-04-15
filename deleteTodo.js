@@ -7,8 +7,8 @@ const Todo = require('./models/todo');
  */
  const deleteTodos = async(data) => {
   const { res } = data;
-  const todos = await Todo.deleteMany();
-  successHandler(res, todos);
+  await Todo.deleteMany();
+  successHandler(res);
 }
 
 /** 刪除單一Todo資料
@@ -19,13 +19,8 @@ const Todo = require('./models/todo');
   const { res, req } = data;
   try {
     const id = req.url.split('/').pop();
-    const todos = await Todo.findByIdAndDelete(id)
-
-    if (todos) {
-      successHandler(res, todos);
-    } else {
-      errorHandler(res, 400, message.noData);
-    }
+    await Todo.findByIdAndDelete(id)
+    successHandler(res);
   } catch (err) {
     errorHandler(res, 400, err.message);
   }

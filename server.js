@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const libs = require('./libs');
 const { errorHandler } = require('./responseHandler');
-const { getTodo, getTodos } = require('./getTodo');
+const getTodos = require('./getTodo');
 const postTodo = require('./postTodo');
 const { deleteTodo, deleteTodos } = require('./deleteTodo');
+const patchTodo = require('./patchTodo');
 
 // 全域變數套件設定
 dotenv.config({ path: "./config.env" })
@@ -37,14 +38,14 @@ const requestListenet = (req, res) => {
 
   if (url === "/todos" && method === "GET") {
     getTodos(data)
-  } else if (url.startsWith("/todos/") && method === "GET") {
-    getTodo(data)
   } else if (url === "/todos" && method === "POST") {
     postTodo(data)
   } else if (url === "/todos" && method === "DELETE") {
     deleteTodos(data)
   } else if (url.startsWith("/todos/") && method === "DELETE") {
     deleteTodo(data)
+  } else if (url.startsWith("/todos/") && method === "PATCH") {
+    patchTodo(data)
   } else if (method === 'OPTIONS') {
     res.writeHead(200, headers)
     res.end();

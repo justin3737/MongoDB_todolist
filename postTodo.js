@@ -19,12 +19,12 @@ const postTodo = (data) => {
     try {
       const title = JSON.parse(body).title;
       if (title !== undefined) {
-        const todos = await Todo.create(
+        await Todo.create(
           {
             "title": title,
           }
         );
-        successHandler(res, todos);
+        successHandler(res);
       } else {
         errorHandler(res, 400, wrongColumn);
       }

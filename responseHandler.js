@@ -1,15 +1,16 @@
 const { headers } = require("./libs");
+const Todo = require("./models/todo");
 
 /** 成功
  * @param res requestListener 的 res
- * @param data requestListener 資訊與清單物件
  */
 
-const successHandler = (res, data) => {
+const successHandler = async(res) => {
+  const result = await Todo.find();
   res.writeHead(200, headers);
   res.write(JSON.stringify({
     status: 'success',
-    data
+    data: result
   }));
   res.end();
 }
