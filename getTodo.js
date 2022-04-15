@@ -1,6 +1,6 @@
 const { successHandler, errorHandler } = require('./responseHandler');
 const { message } = require('./libs');
-const Todo = require('../models/todo');
+const Todo = require('./models/todo');
 
 /** 取得所有Todo資料
  * @param data requestListener 資訊與清單物件

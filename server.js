@@ -2,7 +2,8 @@ const http = require('http');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const libs = require('./libs');
-const { errorHandler } = require('./responseHandler')
+const { errorHandler } = require('./responseHandler');
+const { getTodo, getTodos } = require('./getTodo');
 
 // 全域變數套件設定
 dotenv.config({ path: "./config.env" })
@@ -20,10 +21,21 @@ mongoose.connect(
     console.log(error);
   });
 
+
+
 const requestListenet = (req, res) => {
   const { headers, message } = libs;
+  const { url, method } = req
+  const data = {
+    /** requestListener req */
+    req,
+    /** requestListener res */
+    res
+  }
 
-  if (method === 'OPTIONS') {
+  if (method === 'GET' && url === '/todos') {
+    getTodos(data);
+  } else if (method === 'OPTIONS') {
     res.writeHead(200, headers)
     res.end();
   } else {
