@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const libs = require('./libs');
 const { errorHandler } = require('./responseHandler');
 const { getTodo, getTodos } = require('./getTodo');
+const postTodo = require('./postTodo');
 
 // 全域變數套件設定
 dotenv.config({ path: "./config.env" })
@@ -33,8 +34,12 @@ const requestListenet = (req, res) => {
     res
   }
 
-  if (method === 'GET' && url === '/todos') {
-    getTodos(data);
+  if (url === "/todos" && method === "GET") {
+    getTodos(data)
+  } else if (url.startsWith("/todos/") && method === "GET") {
+    getTodo(data)
+  } else if (url === "/todos" && method === "POST") {
+    postTodo(data)
   } else if (method === 'OPTIONS') {
     res.writeHead(200, headers)
     res.end();

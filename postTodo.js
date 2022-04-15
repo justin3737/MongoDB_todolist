@@ -1,6 +1,6 @@
 const { successHandler, errorHandler } = require("./responseHandler");
 const { message } = require('./libs')
-const Todo = require("../models/todo");
+const Todo = require("./models/todo");
 
 const postTodo = (data) => {
   const { req, res } = data;
@@ -21,9 +21,9 @@ const postTodo = (data) => {
       if (title !== undefined) {
         const todos = await Todo.create(
           {
-            title: title,
+            "title": title,
           }
-        )
+        );
         successHandler(res, todos);
       } else {
         errorHandler(res, 400, wrongColumn);
