@@ -56,4 +56,4 @@ const requestListenet = (req, res) => {
 }
 
 const server = http.createServer(requestListenet);
-server.listen(process.env.PORT | 3000);
+server.listen(process.env.PORT);
